@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RaízViva — seu progresso dá vida a um mundo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="zona-toasts"></div>
+
+<section id="tela-login" class="tela-auth">
+  <div class="painel-auth cartao">
+    <span class="selo-broto">🌱</span>
+    <h1>RaízViva</h1>
+    <p class="subtitulo">seu progresso dá vida a um mundo</p>
+    <form id="form-login">
+      <div class="campo">
+        <label for="login-email">E-mail</label>
+        <input type="email" id="login-email" required placeholder="voce@exemplo.com">
+      </div>
+      <div class="campo">
+        <label for="login-senha">Senha</label>
+        <input type="password" id="login-senha" required placeholder="••••••••">
+      </div>
+      <p class="campo-erro" id="erro-login"></p>
+      <button type="submit" class="botao botao-primario" style="width:100%;">Entrar</button>
+    </form>
+    <p class="alternar-auth">Ainda não tem conta? <button id="ir-cadastro">Cadastre-se</button></p>
+    <p class="demo-dica">Demonstração: <b>demo@raizviva.com</b> / senha <b>123456</b></p>
+  </div>
+</section>
+
+
+<section id="tela-cadastro" class="tela-auth oculto">
+  <div class="painel-auth cartao">
+    <span class="selo-broto">🌼</span>
+    <h1>Criar conta</h1>
+    <p class="subtitulo">plante a primeira semente do seu hábito</p>
+    <form id="form-cadastro">
+      <div class="campo">
+        <label for="cad-nome">Nome</label>
+        <input type="text" id="cad-nome" required placeholder="Seu nome">
+      </div>
+      <div class="campo">
+        <label for="cad-email">E-mail</label>
+        <input type="email" id="cad-email" required placeholder="voce@exemplo.com">
+      </div>
+      <div class="campo">
+        <label for="cad-senha">Senha</label>
+        <input type="password" id="cad-senha" required placeholder="mínimo 4 caracteres">
+      </div>
+      <p class="campo-erro" id="erro-cadastro"></p>
+      <button type="submit" class="botao botao-primario" style="width:100%;">Criar conta e entrar</button>
+    </form>
+    <p class="alternar-auth">Já tem conta? <button id="ir-login">Fazer login</button></p>
+  </div>
+</section>
+
+<!-- ==================== APP (pós-login) ==================== -->
+<div id="app" class="oculto">
+  <header class="topo">
+    <div class="topo-interna">
+      <div class="marca"><span class="broto">🌱</span> RaízViva</div>
+      <nav class="abas">
+        <button data-tela="dashboard" class="ativa">Check-in</button>
+        <button data-tela="mundo">Meu Mundo</button>
+        <button data-tela="habitos">Hábitos</button>
+        <button data-tela="estatisticas">Estatísticas</button>
+        <button data-tela="config">Configurações</button>
+      </nav>
+      <div class="usuario-info">
+        <span id="saudacao-usuario"></span>
+        <span class="pilula-xp" id="pilula-xp-topo">0 XP</span>
+        <button class="botao botao-fantasma botao-peq" id="btn-logout">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ---- DASHBOARD ---- -->
+    <section id="tela-dashboard">
+      <div class="grade-dash">
+        <div class="cartao cartao-mundo">
+          <span class="vaso-emoji" id="dash-emoji-planta">🌱</span>
+          <div class="nome-estagio" id="dash-nome-estagio">Semente</div>
+          <div class="desc-estagio" id="dash-desc-estagio">Toda jornada começa pequena.</div>
+          <div class="barra-xp-wrap"><div class="barra-xp" id="dash-barra-xp" style="width:0%"></div></div>
+          <div class="legenda-xp"><span id="dash-xp-atual">0 XP</span><span id="dash-xp-prox">próx. 100 XP</span></div>
+          <div class="nivel-selo" id="dash-nivel">Nível 1</div>
+          <div id="dash-aviso-risco"></div>
+        </div>
+
+        <div class="cartao">
+          <div class="secao-titulo">
+            <h2>Check-in de hoje</h2>
+            <button class="botao botao-fantasma botao-peq" id="btn-abrir-retro">↩ Check-in retroativo</button>
+          </div>
+          <div class="lista-habitos" id="lista-checkin-hoje"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---- MEU MUNDO ---- -->
+    <section id="tela-mundo" class="oculto">
+      <div class="cartao painel-mundo-grande">
+        <span class="vaso-emoji" id="mundo-emoji-planta">🌱</span>
+        <h2 id="mundo-nome-estagio">Semente</h2>
+        <p class="subtitulo" id="mundo-desc-estagio">Toda jornada começa pequena.</p>
+        <div class="trilha-estagios" id="mundo-trilha"></div>
+        <p style="font-size:.85rem; color:#5c6b60;">Seu mundo reflete o desempenho geral de todos os seus hábitos ativos.</p>
+      </div>
+      <div class="cartao" style="margin-top:20px;">
+        <h3>Linha do tempo de eventos</h3>
+        <div class="linha-eventos" id="lista-eventos"></div>
+      </div>
+    </section>
+
+    <!-- ---- HÁBITOS ---- -->
+    <section id="tela-habitos" class="oculto">
+      <div class="secao-titulo">
+        <h2>Meus hábitos</h2>
+        <button class="botao botao-primario" id="btn-novo-habito">+ Novo hábito</button>
+      </div>
+      <div class="lista-habitos" id="lista-todos-habitos"></div>
+    </section>
+
+    <!-- ---- ESTATÍSTICAS ---- -->
+    <section id="tela-estatisticas" class="oculto">
+      <h2>Estatísticas</h2>
+      <div class="grade-stats" id="grade-stats-habitos"></div>
+
+      <div class="cartao" style="margin-bottom:20px;">
+        <h3>Heatmap — últimos 30 dias</h3>
+        <div class="heatmap" id="heatmap-30"></div>
+        <div class="legenda-heat">
+          <span><i class="quadrado-legenda" style="background:var(--verde-folha)"></i> dia com check-in</span>
+          <span><i class="quadrado-legenda" style="background:var(--terracota)"></i> dia com falha</span>
+          <span><i class="quadrado-legenda" style="background:#e7efe6"></i> sem hábitos previstos</span>
+        </div>
+      </div>
+
+      <div class="cartao">
+        <h3>Comparativo entre hábitos (conclusão em 30 dias)</h3>
+        <div class="barra-comp" id="barra-comparativo"></div>
+      </div>
+    </section>
+
+    <!-- ---- CONFIGURAÇÕES ---- -->
+    <section id="tela-config" class="oculto">
+      <h2>Lembretes e notificações</h2>
+      <div class="cartao" style="margin-bottom:18px;">
+        <div class="linha-config">
+          <div>
+            <div class="nome">Notificações globais</div>
+            <div style="font-size:.76rem; color:#6a7a6f;">Ativa ou desativa todos os lembretes de uma vez.</div>
+          </div>
+          <label class="interruptor">
+            <input type="checkbox" id="chk-notif-global">
+            <span class="trilha"></span>
+          </label>
+        </div>
+      </div>
+      <div class="cartao">
+        <h3 style="margin-bottom:12px;">Lembrete por hábito</h3>
+        <div class="lista-config" id="lista-config-habitos"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="rodape">RaízViva · protótipo acadêmico · dados salvos apenas neste navegador (localStorage)</footer>
+</div>
+
+<!-- ==================== MODAL: NOVO / EDITAR HÁBITO ==================== -->
+<div id="modal-habito" class="modal-fundo oculto">
+  <div class="modal-caixa">
+    <h3 id="modal-habito-titulo">Novo hábito</h3>
+    <p class="subtitulo" style="margin-bottom:16px;">Defina como esse hábito vai crescer com você.</p>
+    <form id="form-habito">
+      <input type="hidden" id="habito-id">
+      <div class="campo">
+        <label for="habito-nome">Nome do hábito</label>
+        <input type="text" id="habito-nome" required placeholder="Ex.: Beber água, Ler 10 páginas...">
+      </div>
+      <div class="grade-2">
+        <div class="campo">
+          <label for="habito-categoria">Categoria</label>
+          <select id="habito-categoria">
+            <option>Saúde</option>
+            <option>Estudo</option>
+            <option>Lazer</option>
+            <option>Trabalho</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="habito-meta">Meta (opcional)</label>
+          <input type="text" id="habito-meta" placeholder="Ex.: 2L por dia">
+        </div>
+      </div>
+      <div class="campo">
+        <label>Frequência</label>
+        <select id="habito-freq-tipo">
+          <option value="diaria">Todos os dias</option>
+          <option value="semanal">Dias específicos da semana</option>
+        </select>
+      </div>
+      <div class="campo oculto" id="wrap-dias-semana">
+        <label>Selecione os dias</label>
+        <div class="linha-dias" id="linha-dias-semana"></div>
+      </div>
+      <div class="campo">
+        <label>Ícone</label>
+        <div class="linha-icones" id="linha-icones"></div>
+      </div>
+      <div class="campo">
+        <label>Cor</label>
+        <div class="linha-cores" id="linha-cores"></div>
+      </div>
+      <p class="campo-erro" id="erro-habito"></p>
+      <div class="acoes-modal">
+        <button type="button" class="botao botao-fantasma" id="btn-excluir-habito" style="margin-right:auto; display:none;">Desativar hábito</button>
+        <button type="button" class="botao botao-fantasma" id="btn-cancelar-habito">Cancelar</button>
+        <button type="submit" class="botao botao-primario">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ==================== MODAL: CHECK-IN RETROATIVO ==================== -->
+<div id="modal-retro" class="modal-fundo oculto">
+  <div class="modal-caixa">
+    <h3>Check-in retroativo</h3>
+    <p class="subtitulo">Você pode registrar hábitos de <b>ontem</b> (janela de até 24h). Check-ins retroativos não geram evolução do mundo, mas contam XP e streak.</p>
+    <div class="lista-habitos" id="lista-retro"></div>
+    <div class="acoes-modal">
+      <button type="button" class="botao botao-fantasma" id="btn-fechar-retro">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
